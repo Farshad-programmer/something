@@ -8,7 +8,7 @@
 // just for test 
 
 const int SCREEN_WIDTH = 224;
-const int SCREEN_HEIGHT = 287;
+const int SCREEN_HEIGHT = 288;
 
 
 int main(int argc, char* argv[]) {
