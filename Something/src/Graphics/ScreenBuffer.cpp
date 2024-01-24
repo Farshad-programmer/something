@@ -12,7 +12,7 @@ ScreenBuffer::ScreenBuffer()
 ScreenBuffer::ScreenBuffer(const ScreenBuffer& screenBuffer)
 {
 	m_surface = SDL_CreateRGBSurfaceWithFormat(0, screenBuffer.m_surface->w, screenBuffer.m_surface->h, 0, screenBuffer.m_surface->format->format);
-	SDL_BlitSurface(screenBuffer.m_surface, nullptr, m_surface, nullptr); // copy all of the surface from the fþrst surface to the second surface
+	SDL_BlitSurface(screenBuffer.m_surface, nullptr, m_surface, nullptr); // copy all of the surface from the first surface to the second surface
 }
 
 void ScreenBuffer::Init(uint32_t format, uint32_t width, uint32_t height)

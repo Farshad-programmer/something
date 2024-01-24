@@ -5,13 +5,11 @@
 #include "Graphics/Color.h"
 #include "Graphics/ScreenBuffer.h"
 
+// just for test 
 
 const int SCREEN_WIDTH = 224;
-const int SCREEN_HEIGHT = 288;
+const int SCREEN_HEIGHT = 287;
 
-
-//void SetPixel(SDL_Surface* surface, uint32_t color, int x, int y);// y = row , x = column
-//size_t GetIndex(SDL_Surface* surface, int row, int column);
 
 int main(int argc, char* argv[]) {
 
@@ -46,7 +44,7 @@ int main(int argc, char* argv[]) {
 		ScreenBuffer screenBuffer;
 		screenBuffer.Init(pixelFormat->format, surface->w, surface->h);
 		screenBuffer.SetPixel(Color::Red(), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-		//SDL_BlitSurface(screenBuffer.GetSurface(), nullptr, surface, nullptr);
+		SDL_BlitSurface(screenBuffer.GetSurface(), nullptr, surface, nullptr);
 		
 		SDL_UpdateWindowSurface(window);
 
@@ -75,22 +73,6 @@ int main(int argc, char* argv[]) {
 	return 0;
 
 }
-
-
-//void SetPixel(SDL_Surface* surface, uint32_t color, int x, int y)
-//{
-//	SDL_LockSurface(surface);
-//
-//	uint32_t* pixels = (uint32_t*)surface->pixels; // this is a 1D array of all the pixels on the surface
-//	size_t index = GetIndex(surface, y, x); // since want the pixels as x and y , we transfered it to index
-//	pixels[index] = color;
-//
-//	SDL_UnlockSurface(surface);
-//}
-//size_t GetIndex(SDL_Surface* surface, int row, int column)
-//{
-//	return row * surface->w + column;
-//}
 
 
 
