@@ -2,55 +2,22 @@
 #include <iostream>
 #include "../src/Utils/Vec2D.h"
 #include <SDL.h>
-#include "Graphics/Color.h"
-#include "Graphics/ScreenBuffer.h"
+#include "Graphics/Screen.h"
 
-// just for test 
 
 const int SCREEN_WIDTH = 224;
 const int SCREEN_HEIGHT = 288;
-
+const int MAGNIFICATION = 3; // using this instead f changing SCREEN_WIDTH and SCREEN_HEIGHT because we want to make screen bigger but keep the pixel resolution as same , just size of the pixel will be bigger
 
 int main(int argc, char* argv[]) {
 
 
-	if (SDL_Init(SDL_INIT_VIDEO))
-	{
-		std::cout << "STL INIT failed" << std::endl;
-		return 1;
-	}
-
-	SDL_Window* window = SDL_CreateWindow("Arcade", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-	if (window == nullptr)
-	{
-		std::cout << "Could not create window! here is an error :" << SDL_GetError() << std::endl;
-		return 1;
-	}
-
-	SDL_Surface* surface = SDL_GetWindowSurface(window);
-	if(surface)
-	{
-
-		SDL_Surface* argbSurface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_ARGB8888, 0);
-	
-		SDL_PixelFormat* pixelFormat = argbSurface->format;
-		std::cout << "The window pixel format is : " << SDL_GetPixelFormatName(pixelFormat->format);
-
-		//uint32_t color = 0xFF0000;
-		Color::InitColorFormat(pixelFormat);
-		//Color c(255, 0, 0, 0);
+	Screen theScreen;
+	theScreen.Init(SCREEN_WIDTH, SCREEN_HEIGHT, MAGNIFICATION);
+	theScreen.Draw(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, Color::Red());
+	theScreen.SwapScreens();
 
 
-		ScreenBuffer screenBuffer;
-		screenBuffer.Init(pixelFormat->format, surface->w, surface->h);
-		screenBuffer.SetPixel(Color::Red(), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-		SDL_BlitSurface(screenBuffer.GetSurface(), nullptr, surface, nullptr);
-		
-		SDL_UpdateWindowSurface(window);
-
-		// Clean up the original surface
-		SDL_FreeSurface(surface);
-	}
 
 	SDL_Event sdlEvent;
 	bool running = true;
@@ -67,9 +34,6 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-
-	SDL_DestroyWindow(window);
-	SDL_Quit();
 	return 0;
 
 }
