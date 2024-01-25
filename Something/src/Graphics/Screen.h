@@ -5,6 +5,7 @@
 
 struct SDL_Window;
 struct SDL_Surface;
+class Line2D;
 class Vec2D;
 
 class Screen
@@ -19,6 +20,7 @@ public:
 	// draw methods go here
 	void Draw(int x, int y, const Color& color);
 	void Draw(const Vec2D& point, const Color& color);
+	void Draw(const Line2D& line, const Color& color);
 
 private:
 

@@ -121,7 +121,7 @@ Vec2D& Vec2D::Normalize()
     return *this;
 }
 
-float Vec2D::Distance(Vec2D& otherVec) const
+float Vec2D::Distance(const Vec2D& otherVec) const
 {
     return (otherVec - *this).Mag();
 }

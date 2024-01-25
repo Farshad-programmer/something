@@ -36,7 +36,7 @@ public:
     float Mag() const;
     Vec2D GetUnitVec() const;
     Vec2D& Normalize();
-    float Distance(Vec2D& otherVec) const;
+    float Distance(const Vec2D& otherVec) const;
     float Dot(const Vec2D& otherVec)const;
     Vec2D ProjectOnto(const Vec2D& otherVec)const;
     float AngleBetween(const Vec2D& otherVec) const;
