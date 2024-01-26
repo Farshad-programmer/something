@@ -8,14 +8,14 @@
 
 
 Screen::Screen()
-	:m_width(0),m_height(0),m_window(nullptr),m_windowSurface(nullptr)
+	:m_width(0), m_height(0), m_window(nullptr), m_windowSurface(nullptr)
 {
 
 }
 
 Screen::~Screen()
 {
-	if(m_window)
+	if (m_window)
 	{
 		SDL_DestroyWindow(m_window);
 		m_window = nullptr;
@@ -59,7 +59,7 @@ SDL_Window* Screen::Init(uint32_t w, uint32_t h, uint32_t magnification)
 void Screen::SwapScreens()
 {
 	assert(m_window);
-	if(m_window)
+	if (m_window)
 	{
 		// clear the current front facing surface , not the back buffer
 		// since  we use magnification we need use "SDL_BlitScaled" instead "SDL_BlitSurface"
@@ -92,6 +92,9 @@ void Screen::Draw(const Line2D& line, const Color& color)
 	assert(m_window);
 	if (m_window)
 	{
+		//Bresenham
+
+
 		int dx, dy;
 		int x0 = roundf(line.GetP0().GetX());
 		int y0 = roundf(line.GetP0().GetY());
@@ -100,7 +103,7 @@ void Screen::Draw(const Line2D& line, const Color& color)
 
 		dx = x1 - x0;
 		dy = y1 - y0;
-		signed const char ix((dx > 0) - (dx < 0)); // evaluate to 1 or -1
+		signed const char ix = (dx > 0) - (dx < 0); // evaluate to 1 or -1
 		signed const char iy((dy > 0) - (dy < 0)); // evaluate to 1 or -1
 
 		dx = abs(dx) * 2;
@@ -108,13 +111,14 @@ void Screen::Draw(const Line2D& line, const Color& color)
 
 		Draw(0, 0, color);
 
-		if(dx >= dy)
+		if (dx >= dy)
 		{
 			// go along in the x
+			std::cout << "go along in the x" << std::endl;
 			int d = dy - dx / 2;
 			while (x0 != x1)
 			{
-				if(d >= 0)
+				if (d >= 0)
 				{
 					d -= dx;
 					y0 += iy;
@@ -127,10 +131,11 @@ void Screen::Draw(const Line2D& line, const Color& color)
 		else
 		{
 			// go along in y
+			std::cout << "go along in the y" << std::endl;
 			int d = dx - dy / 2;
 			while (y0 != y1)
 			{
-				if(d >= 0)
+				if (d >= 0)
 				{
 					d -= dy;
 					x0 += ix;
@@ -140,15 +145,105 @@ void Screen::Draw(const Line2D& line, const Color& color)
 				Draw(x0, y0, color);
 			}
 		}
-
 	}
 }
 
 void Screen::ClearScreen()
 {
 	assert(m_window);
-	if(m_window)
+	if (m_window)
 	{
 		SDL_FillRect(m_windowSurface, nullptr, m_clearColor.GetPixelColor());
 	}
 }
+
+
+
+/*
+//Bresenham
+
+
+int dx, dy;
+int x0 = roundf(line.GetP0().GetX());
+int y0 = roundf(line.GetP0().GetY());
+int x1 = roundf(line.GetP1().GetX());
+int y1 = roundf(line.GetP1().GetY());
+
+dx = x1 - x0;
+dy = y1 - y0;
+signed const char ix = (dx > 0) - (dx < 0); // evaluate to 1 or -1
+signed const char iy((dy > 0) - (dy < 0)); // evaluate to 1 or -1
+
+dx = abs(dx) * 2;
+dy = abs(dy) * 2;
+
+Draw(0, 0, color);
+
+if (dx >= dy)
+{
+	// go along in the x
+	std::cout << "go along in the x" << std::endl;
+	int d = dy - dx / 2;
+	while (x0 != x1)
+	{
+		if (d >= 0)
+		{
+			d -= dx;
+			y0 += iy;
+		}
+		d += dy;
+		x0 += ix;
+		Draw(x0, y0, color);
+	}
+}
+else
+{
+	// go along in y
+	std::cout << "go along in the y" << std::endl;
+	int d = dx - dy / 2;
+	while (y0 != y1)
+	{
+		if (d >= 0)
+		{
+			d -= dy;
+			x0 += ix;
+		}
+		d += dx;
+		y0 += iy;
+		Draw(x0, y0, color);
+	}
+}
+
+ */
+
+
+
+
+/*
+ DDL
+ 
+int dx, dy;
+float xInc, yInc;
+float x0 = line.GetP0().GetX();
+float y0 = line.GetP0().GetY();
+float x1 = line.GetP1().GetX();
+float y1 = line.GetP1().GetY();
+
+dx = roundf(x1 - x0);
+dy = roundf(y1 - y0);
+
+float step = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+
+
+
+xInc = dx / step;
+yInc = dy / step;
+
+for (int i = 0; i < step; i++)
+{
+	x0 += xInc;
+	y0 += yInc;
+	Draw(roundf(x0), roundf(y0), color);
+}
+
+*/

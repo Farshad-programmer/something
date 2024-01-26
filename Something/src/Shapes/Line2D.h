@@ -14,6 +14,7 @@ public:
 	Vec2D MinPoint() const;
 	float Slope() const;
 	float Length();
+
 private:
 
 	Vec2D m_p0;

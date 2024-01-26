@@ -5,28 +5,34 @@
 #include "Graphics/Screen.h"
 #include "Shapes/Line2D.h"
 
-
 const int SCREEN_WIDTH = 224;
 const int SCREEN_HEIGHT = 288;
 const int MAGNIFICATION = 3; // using this instead f changing SCREEN_WIDTH and SCREEN_HEIGHT because we want to make screen bigger but keep the pixel resolution as same , just size of the pixel will be bigger
 
 int main(int argc, char* argv[]) {
 
-
 	Screen theScreen;
 	theScreen.Init(SCREEN_WIDTH, SCREEN_HEIGHT, MAGNIFICATION);
 	//theScreen.Draw(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, Color::Red());
-	Line2D line = { Vec2D(0,0),Vec2D(SCREEN_WIDTH,SCREEN_HEIGHT) };
+	Line2D line = { Vec2D(70,70),Vec2D(100,100) };
 	theScreen.Draw(line, Color::White());
 	theScreen.SwapScreens();
 
+	Vec2D start = Vec2D(line.GetP0());
+	Vec2D end = Vec2D(line.GetP1().GetX(),line.GetP1().GetY());
 
 
 	SDL_Event sdlEvent;
 	bool running = true;
-
 	while (running)
 	{
+		std::cout << "rotating ... " << std::endl;
+		end.Rotate(50.f, start);
+		Line2D line = { start,end };
+		theScreen.Draw(line, Color::White());
+		theScreen.SwapScreens();
+		SDL_Delay(200);
+		
 		while (SDL_PollEvent(&sdlEvent))
 		{
 			switch (sdlEvent.type)
