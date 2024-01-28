@@ -5,6 +5,7 @@
 #include <cassert>
 #include <cmath>
 #include "../Shapes/Line2D.h"
+#include "../Shapes/Star.h"
 
 
 Screen::Screen()
@@ -145,6 +146,14 @@ void Screen::Draw(const Line2D& line, const Color& color)
 				Draw(x0, y0, color);
 			}
 		}
+	}
+}
+
+void Screen::Draw(Star2D& star, const Color& color)
+{
+	for (size_t i = 0; i < star.GetStarSize(); i++)
+	{
+		Draw(star[i], color);
 	}
 }
 

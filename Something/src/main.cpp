@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include "Graphics/Screen.h"
 #include "Shapes/Line2D.h"
+#include "Shapes/Star.h"
 
 const int SCREEN_WIDTH = 224;
 const int SCREEN_HEIGHT = 288;
@@ -14,24 +15,17 @@ int main(int argc, char* argv[]) {
 	Screen theScreen;
 	theScreen.Init(SCREEN_WIDTH, SCREEN_HEIGHT, MAGNIFICATION);
 	//theScreen.Draw(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, Color::Red());
-	Line2D line = { Vec2D(70,70),Vec2D(100,100) };
-	theScreen.Draw(line, Color::White());
+	//Line2D line = { Vec2D(70,70),Vec2D(100,100) };
+	Vec2D center = Vec2D(100, 100);
+	Star2D star = Star2D(center, 50, 100, 5);
+	theScreen.Draw(star,Color::Blue());
 	theScreen.SwapScreens();
-
-	Vec2D start = Vec2D(line.GetP0());
-	Vec2D end = Vec2D(line.GetP1().GetX(),line.GetP1().GetY());
-
 
 	SDL_Event sdlEvent;
 	bool running = true;
 	while (running)
 	{
-		std::cout << "rotating ... " << std::endl;
-		end.Rotate(50.f, start);
-		Line2D line = { start,end };
-		theScreen.Draw(line, Color::White());
-		theScreen.SwapScreens();
-		SDL_Delay(200);
+		
 		
 		while (SDL_PollEvent(&sdlEvent))
 		{
@@ -61,17 +55,26 @@ int main(int argc, char* argv[]) {
 
 
 
+/*
+ 
+
+
+Vec2D start = Vec2D(line.GetP0());
+Vec2D end = Vec2D(line.GetP1().GetX(), line.GetP1().GetY());
 
 
 
 
 
+std::cout << "rotating ... " << std::endl;
+end.Rotate(50.f, start);
+Line2D line = { start,end };
+theScreen.Draw(line, Color::White());
+theScreen.SwapScreens();
+SDL_Delay(200);
 
 
-
-
-
-
+ */
 
 
 

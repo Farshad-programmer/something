@@ -2,10 +2,12 @@
 #include <stdint.h>
 #include "ScreenBuffer.h"
 #include "Color.h"
-
+#include <vector>
+class Star2D;
 struct SDL_Window;
 struct SDL_Surface;
 class Line2D;
+class Star;
 class Vec2D;
 
 class Screen
@@ -21,7 +23,7 @@ public:
 	void Draw(int x, int y, const Color& color);
 	void Draw(const Vec2D& point, const Color& color);
 	void Draw(const Line2D& line, const Color& color);
-	
+	void Draw(Star2D& star, const Color& color);
 
 private:
 
